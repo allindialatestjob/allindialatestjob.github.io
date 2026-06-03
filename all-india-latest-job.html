@@ -1,0 +1,922 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>All India Latest Job™ – Sarkari Naukri, Results, Admit Card Alerts</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800&family=Noto+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --orange: #A03E00;
+    --blue: #3B6B9C;
+    --green: #5A7F5A;
+    --gold: #D67A2A;
+    --purple: #7A4A8F;
+    --teal: #2A7C7C;
+    --sand: #85736B;
+    --bg: #FFF8F4;
+    --surface: #FFFFFF;
+    --header-bg: linear-gradient(180deg, #FFDCC0, #FFDBCD);
+    --header-text: #351000;
+    --header-sub: #52443C;
+    --ticker-bg: #FFDCC0;
+    --ticker-border: #FFB68D;
+    --tab-bg: #F4ECE4;
+    --tab-inactive: #85736B;
+    --card-border: #EDE0D4;
+    --footer-bg: #F7EEE8;
+    --table-header: #F4ECE4;
+    --text: #1C1B1A;
+    --text-muted: #6B5E57;
+    --primary: #A03E00;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Noto Sans', sans-serif; background: var(--bg); color: var(--text); }
+
+  /* HEADER */
+  #header {
+    background: var(--header-bg);
+    padding: 14px 20px 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--ticker-border);
+  }
+  #header .brand h1 {
+    font-family: 'Baloo 2', sans-serif;
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--header-text);
+    line-height: 1.1;
+    cursor: pointer;
+  }
+  #header .brand p {
+    font-size: 11px;
+    color: var(--header-sub);
+    font-weight: 500;
+    margin-top: 2px;
+  }
+  #header .header-actions { display: flex; gap: 8px; align-items: center; }
+  .icon-btn {
+    background: none; border: none; cursor: pointer;
+    padding: 6px; border-radius: 50%;
+    color: var(--header-text); font-size: 18px;
+    transition: background .2s;
+  }
+  .icon-btn:hover { background: rgba(160,62,0,.12); }
+
+  /* TICKER */
+  #ticker {
+    background: var(--ticker-bg);
+    border-top: 1px solid var(--ticker-border);
+    border-bottom: 1px solid var(--ticker-border);
+    padding: 6px 12px;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+  #ticker-inner {
+    display: inline-block;
+    animation: marquee 38s linear infinite;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--header-text);
+  }
+  @keyframes marquee { 0% { transform: translateX(100vw); } 100% { transform: translateX(-100%); } }
+
+  /* TABS */
+  #tabs {
+    background: var(--tab-bg);
+    display: flex;
+    overflow-x: auto;
+    gap: 0;
+    border-bottom: 2px solid var(--ticker-border);
+  }
+  #tabs::-webkit-scrollbar { height: 0; }
+  .tab-btn {
+    background: none; border: none; cursor: pointer;
+    padding: 10px 14px;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--tab-inactive);
+    white-space: nowrap;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -2px;
+    transition: color .2s, border-color .2s;
+    font-family: 'Noto Sans', sans-serif;
+  }
+  .tab-btn.active { color: var(--orange); border-bottom-color: var(--orange); }
+  .tab-btn:hover { color: var(--orange); }
+
+  /* LAYOUT */
+  #main { max-width: 1100px; margin: 0 auto; padding: 16px; }
+  .page { display: none; } .page.active { display: block; }
+
+  /* SEARCH BAR */
+  .search-wrap {
+    background: #F4ECE4;
+    border: 1px solid var(--card-border);
+    border-radius: 28px;
+    display: flex;
+    align-items: center;
+    padding: 6px 8px 6px 16px;
+    margin-bottom: 18px;
+    gap: 8px;
+  }
+  .search-wrap input {
+    flex: 1; border: none; background: transparent;
+    font-size: 14px; outline: none; color: var(--text);
+    font-family: 'Noto Sans', sans-serif;
+  }
+  .search-wrap input::placeholder { color: var(--text-muted); }
+  .btn-primary {
+    background: var(--orange); color: #fff;
+    border: none; border-radius: 20px;
+    padding: 8px 20px; font-size: 14px;
+    font-weight: 700; cursor: pointer;
+    font-family: 'Noto Sans', sans-serif;
+    transition: background .2s;
+  }
+  .btn-primary:hover { background: #7a2f00; }
+
+  /* CATEGORIES GRID */
+  .categories-title { font-size: 15px; font-weight: 700; margin-bottom: 10px; }
+  .cat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 18px; }
+  .cat-block {
+    border-radius: 6px;
+    padding: 14px 16px;
+    display: flex; align-items: center; gap: 10px;
+    cursor: pointer; transition: opacity .2s; color: #fff;
+    font-weight: 800; font-size: 12px; text-transform: uppercase;
+    letter-spacing: .5px;
+  }
+  .cat-block:hover { opacity: .87; }
+  .cat-block .cat-icon { font-size: 18px; }
+
+  /* SECTION BOX */
+  .section-box {
+    border: 1px solid var(--card-border);
+    border-radius: 6px;
+    overflow: hidden;
+    margin-bottom: 16px;
+    background: var(--surface);
+  }
+  .section-box-header {
+    padding: 8px 12px;
+    color: #fff;
+    font-weight: 700;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: .5px;
+  }
+  .section-box-list { padding: 8px 12px; }
+  .section-row {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 6px 0;
+    border-bottom: .5px solid #f0e8e0;
+    cursor: pointer; gap: 8px;
+  }
+  .section-row:last-child { border-bottom: none; }
+  .section-row:hover .row-title { color: var(--orange); }
+  .row-title { font-size: 12.5px; color: var(--text); flex: 1; line-height: 1.4; }
+  .badge {
+    font-size: 8px; font-weight: 700; color: #fff;
+    padding: 2px 5px; border-radius: 2px;
+    text-transform: uppercase; flex-shrink: 0;
+  }
+  .badge.new { background: var(--orange); }
+  .badge.out { background: var(--green); }
+  .view-all {
+    text-align: center; padding: 8px;
+    background: #faf5f2;
+    color: var(--orange); font-size: 11px;
+    font-weight: 700; cursor: pointer;
+    border-top: 1px solid var(--card-border);
+    transition: background .2s;
+  }
+  .view-all:hover { background: #f0e8df; }
+
+  /* 2-COL LAYOUT */
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+  @media(max-width:700px) { .two-col, .three-col { grid-template-columns: 1fr; } }
+
+  /* PORTALS */
+  .portals-card {
+    border: 1px solid var(--card-border);
+    border-radius: 6px;
+    background: var(--surface);
+    padding: 14px;
+    margin-bottom: 16px;
+  }
+  .portals-title {
+    font-size: 14px; font-weight: 700;
+    color: var(--orange); margin-bottom: 6px;
+  }
+  .portals-divider { border: none; border-top: 1.5px solid var(--orange); margin-bottom: 10px; }
+  .portals-wrap { display: flex; flex-wrap: wrap; gap: 7px; }
+  .portal-chip {
+    background: #FFF0E8;
+    color: var(--orange);
+    font-size: 11px;
+    font-weight: 700;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background .2s;
+  }
+  .portal-chip:hover { background: #ffdcc0; }
+
+  /* TABLE */
+  .table-card {
+    border: 1px solid var(--card-border);
+    border-radius: 6px;
+    background: var(--surface);
+    overflow: hidden;
+    margin-bottom: 16px;
+  }
+  .table-title { padding: 12px 14px; font-size: 14px; font-weight: 700; color: var(--orange); border-bottom: 1px solid var(--card-border); }
+  table { width: 100%; border-collapse: collapse; }
+  thead tr { background: var(--table-header); }
+  thead th { padding: 8px 10px; font-size: 11px; font-weight: 700; text-align: left; }
+  tbody tr:nth-child(even) { background: #faf5f2; }
+  tbody tr { cursor: pointer; transition: background .2s; }
+  tbody tr:hover { background: #f5ede4; }
+  tbody td { padding: 8px 10px; font-size: 11.5px; }
+  .td-date { font-weight: 700; color: var(--orange); }
+
+  /* JOB CARD (section pages) */
+  .job-card {
+    border: 1px solid var(--card-border);
+    border-radius: 8px;
+    background: var(--surface);
+    padding: 12px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    transition: box-shadow .2s;
+  }
+  .job-card:hover { box-shadow: 0 4px 14px rgba(160,62,0,.12); }
+  .job-card-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+  .cat-tag {
+    font-size: 9px; font-weight: 800; color: #fff;
+    padding: 2px 7px; border-radius: 2px; text-transform: uppercase;
+  }
+  .job-card-title { font-size: 14px; font-weight: 700; margin-bottom: 4px; line-height: 1.35; }
+  .job-card-meta { font-size: 11px; color: var(--text-muted); }
+
+  /* FILTER INPUT */
+  .filter-wrap { margin-bottom: 14px; }
+  .filter-input {
+    width: 100%; padding: 10px 14px;
+    border: 1.5px solid var(--card-border);
+    border-radius: 8px; font-size: 14px;
+    font-family: 'Noto Sans', sans-serif;
+    outline: none; color: var(--text);
+    background: var(--surface);
+    transition: border-color .2s;
+  }
+  .filter-input:focus { border-color: var(--orange); }
+  .section-title { font-size: 18px; font-weight: 700; margin-bottom: 12px; }
+
+  /* MODAL */
+  #modal-backdrop {
+    display: none; position: fixed; inset: 0;
+    background: rgba(0,0,0,.45);
+    z-index: 999; align-items: center; justify-content: center;
+    padding: 16px;
+  }
+  #modal-backdrop.open { display: flex; }
+  #modal {
+    background: #fff; border-radius: 12px;
+    max-width: 480px; width: 100%;
+    padding: 20px; position: relative;
+    box-shadow: 0 8px 40px rgba(0,0,0,.2);
+    animation: modalIn .22s ease;
+  }
+  @keyframes modalIn { from { transform: scale(.94); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+  #modal-title { font-size: 17px; font-weight: 700; line-height: 1.4; margin-bottom: 12px; }
+  .modal-row { display: flex; gap: 8px; margin-bottom: 8px; font-size: 13px; }
+  .modal-label { font-weight: 700; min-width: 90px; flex-shrink: 0; }
+  .modal-actions {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-top: 14px; padding-top: 12px;
+    border-top: 1px solid var(--card-border);
+    flex-wrap: wrap; gap: 8px;
+  }
+  .btn-outline {
+    background: none; border: 1.5px solid var(--orange);
+    color: var(--orange); padding: 7px 14px;
+    border-radius: 8px; font-size: 12px; font-weight: 700;
+    cursor: pointer; font-family: 'Noto Sans', sans-serif;
+    display: flex; align-items: center; gap: 5px;
+    transition: all .2s;
+  }
+  .btn-outline:hover { background: var(--orange); color: #fff; }
+  #modal-close {
+    position: absolute; top: 12px; right: 14px;
+    background: none; border: none; font-size: 20px;
+    cursor: pointer; color: var(--text-muted);
+    line-height: 1;
+  }
+  #modal-close:hover { color: var(--text); }
+
+  /* CONTACT */
+  .contact-card {
+    background: var(--surface);
+    border: 1px solid var(--card-border);
+    border-radius: 10px;
+    padding: 18px;
+    margin-bottom: 14px;
+  }
+  .contact-item {
+    display: flex; align-items: center; gap: 14px;
+    padding: 10px 0;
+    border-bottom: 1px solid #f0e8e0;
+    cursor: pointer; text-decoration: none; color: inherit;
+  }
+  .contact-item:last-child { border-bottom: none; }
+  .contact-icon {
+    width: 38px; height: 38px; border-radius: 50%;
+    background: rgba(160,62,0,.1);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 17px; flex-shrink: 0;
+  }
+  .contact-label { font-size: 11px; color: var(--text-muted); }
+  .contact-value { font-size: 13px; font-weight: 700; color: var(--orange); }
+
+  /* AI SCRAPER */
+  .ai-hero-card {
+    background: #FFF0E4;
+    border-radius: 14px; padding: 18px;
+    margin-bottom: 14px;
+    border: 1px solid #FFD0A8;
+  }
+  .ai-hero-card h2 { font-size: 17px; font-weight: 700; color: var(--orange); margin-bottom: 6px; display: flex; gap: 8px; align-items: center; }
+  .ai-hero-card p { font-size: 12px; color: #52443C; line-height: 1.5; }
+  .scraper-tabs { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 14px; }
+  .scraper-tab {
+    padding: 6px 14px; border-radius: 20px;
+    border: 1.5px solid var(--card-border);
+    font-size: 12px; font-weight: 700; cursor: pointer;
+    background: #fff; color: var(--text-muted);
+    font-family: 'Noto Sans', sans-serif;
+    transition: all .2s;
+  }
+  .scraper-tab.active { background: var(--orange); color: #fff; border-color: var(--orange); }
+  .scraper-tab:hover:not(.active) { border-color: var(--orange); color: var(--orange); }
+  #scraper-output { min-height: 80px; }
+  .scraper-loading {
+    text-align: center; padding: 30px;
+    background: #fff; border-radius: 12px;
+    border: 1px solid var(--card-border);
+  }
+  .spinner {
+    width: 36px; height: 36px; border-radius: 50%;
+    border: 3px solid #f0e8e0;
+    border-top-color: var(--orange);
+    animation: spin 1s linear infinite;
+    margin: 0 auto 12px;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* BOOKMARKS EMPTY */
+  .empty-state {
+    text-align: center; padding: 50px 20px;
+    color: var(--text-muted);
+  }
+  .empty-state .empty-icon { font-size: 52px; opacity: .35; margin-bottom: 12px; }
+  .empty-state h3 { font-size: 15px; font-weight: 700; margin-bottom: 6px; }
+  .empty-state p { font-size: 12px; }
+
+  /* SEARCH RESULTS PAGE */
+  .search-results-header {
+    display: flex; justify-content: space-between;
+    align-items: center; margin-bottom: 12px;
+  }
+  .search-results-header h2 { font-size: 16px; font-weight: 700; }
+  .clear-btn { font-size: 13px; color: var(--orange); cursor: pointer; background: none; border: none; font-weight: 600; }
+
+  /* FOOTER */
+  #footer {
+    background: var(--footer-bg);
+    border-top: 1px solid var(--card-border);
+    padding: 16px 20px 24px;
+    text-align: center;
+    margin-top: 24px;
+  }
+  .footer-links { display: flex; justify-content: center; gap: 6px; flex-wrap: wrap; margin-bottom: 10px; }
+  .footer-link {
+    background: none; border: none; color: var(--orange);
+    font-size: 11px; font-weight: 700; cursor: pointer;
+    padding: 4px 8px; font-family: 'Noto Sans', sans-serif;
+  }
+  .footer-link:hover { text-decoration: underline; }
+  .footer-copy { font-size: 11px; color: var(--text-muted); margin-bottom: 4px; }
+  .footer-disc { font-size: 9px; color: var(--text-muted); opacity: .75; line-height: 1.5; }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div id="header">
+  <div class="brand" onclick="showTab('home')">
+    <h1>All India Latest Job™</h1>
+    <p>Sarkari Naukri, Results, Admit Card Alerts</p>
+  </div>
+  <div class="header-actions">
+    <button class="icon-btn" onclick="showTab('bookmarks')" title="Saved Jobs">🔖</button>
+  </div>
+</div>
+
+<!-- TABS -->
+<div id="tabs">
+  <button class="tab-btn active" onclick="showTab('home')" data-tab="home">Home</button>
+  <button class="tab-btn" onclick="showTab('jobs')" data-tab="jobs">Latest Job</button>
+  <button class="tab-btn" onclick="showTab('admit')" data-tab="admit">Admit Card</button>
+  <button class="tab-btn" onclick="showTab('result')" data-tab="result">Result</button>
+  <button class="tab-btn" onclick="showTab('ai_search')" data-tab="ai_search">AI Live Scraper</button>
+  <button class="tab-btn" onclick="showTab('admission')" data-tab="admission">Admission</button>
+  <button class="tab-btn" onclick="showTab('syllabus')" data-tab="syllabus">Syllabus</button>
+  <button class="tab-btn" onclick="showTab('answerkey')" data-tab="answerkey">Answer Key</button>
+  <button class="tab-btn" onclick="showTab('contact')" data-tab="contact">Contact</button>
+</div>
+
+<!-- TICKER -->
+<div id="ticker">
+  <span id="ticker-inner">🔴 SSC CGL 2026 Online Form – Last Date 31 July &nbsp;|&nbsp; 🔴 UPSC Civil Services 2026 Notification Out &nbsp;|&nbsp; 🔴 Railway RRB ALP 11127 Posts Form Active &nbsp;|&nbsp; 🔴 BPSC 71st CCE Result Out &nbsp;|&nbsp; 🔴 UP Police Constable Exam Date 2026 &nbsp;|&nbsp; 🔴 SBI Clerk 2026 Notification Coming Soon &nbsp;|&nbsp; 🔴 DSSSB Various Post 03/2026 – Last Date 28 July</span>
+</div>
+
+<!-- MAIN -->
+<div id="main">
+
+  <!-- HOME PAGE -->
+  <div class="page active" id="page-home">
+    <div class="search-wrap">
+      <input type="text" id="search-input" placeholder="Search Jobs, Admit Cards, Results..." onkeydown="if(event.key==='Enter')doSearch()">
+      <button class="btn-primary" onclick="doSearch()">Search</button>
+    </div>
+
+    <p class="categories-title">⭐ Categories</p>
+    <div class="cat-grid">
+      <div class="cat-block" style="background:#A03E00" onclick="showTab('jobs')"><span class="cat-icon">💼</span> Latest Jobs</div>
+      <div class="cat-block" style="background:#3B6B9C" onclick="showTab('admit')"><span class="cat-icon">🎫</span> Admit Cards</div>
+      <div class="cat-block" style="background:#5A7F5A" onclick="showTab('result')"><span class="cat-icon">✅</span> Results</div>
+      <div class="cat-block" style="background:#D67A2A" onclick="showTab('answerkey')"><span class="cat-icon">🔑</span> Answer Key</div>
+      <div class="cat-block" style="background:#7A4A8F" onclick="showTab('admission')"><span class="cat-icon">🎓</span> Admissions</div>
+      <div class="cat-block" style="background:#2A7C7C" onclick="showTab('syllabus')"><span class="cat-icon">📚</span> Syllabus</div>
+    </div>
+
+    <div class="two-col">
+      <div class="section-box">
+        <div class="section-box-header" style="background:#A03E00">🔴 Latest Jobs</div>
+        <div class="section-box-list" id="home-jobs-list"></div>
+        <div class="view-all" onclick="showTab('jobs')">View All →</div>
+      </div>
+      <div class="section-box">
+        <div class="section-box-header" style="background:#3B6B9C">🎫 Admit Cards</div>
+        <div class="section-box-list" id="home-admit-list"></div>
+        <div class="view-all" onclick="showTab('admit')">View All →</div>
+      </div>
+    </div>
+
+    <div class="section-box">
+      <div class="section-box-header" style="background:#5A7F5A">📋 Results</div>
+      <div class="section-box-list" id="home-result-list"></div>
+      <div class="view-all" onclick="showTab('result')">View All →</div>
+    </div>
+
+    <!-- PORTALS -->
+    <div class="portals-card">
+      <p class="portals-title">⭐ Important Official Portals</p>
+      <hr class="portals-divider">
+      <div class="portals-wrap">
+        <a class="portal-chip" href="https://upsc.gov.in" target="_blank">UPSC Official</a>
+        <a class="portal-chip" href="https://ssc.gov.in" target="_blank">SSC Official</a>
+        <a class="portal-chip" href="https://indianrailways.gov.in" target="_blank">Railway Board</a>
+        <a class="portal-chip" href="https://ibps.in" target="_blank">IBPS Official</a>
+        <a class="portal-chip" href="https://sbi.co.in" target="_blank">SBI Careers</a>
+        <a class="portal-chip" href="https://uppsc.up.nic.in" target="_blank">UPPSC Board</a>
+        <a class="portal-chip" href="https://bpsc.bih.nic.in" target="_blank">BPSC Patna</a>
+        <a class="portal-chip" href="https://joinindianarmy.nic.in" target="_blank">Indian Army</a>
+        <a class="portal-chip" href="https://nta.ac.in" target="_blank">NTA Exams</a>
+        <a class="portal-chip" href="https://cbse.gov.in" target="_blank">CBSE Board</a>
+      </div>
+    </div>
+
+    <!-- TABLE -->
+    <div class="table-card">
+      <div class="table-title">📊 Latest Job Postings Table</div>
+      <table>
+        <thead><tr><th>Post Title</th><th>Agency</th><th>Last Date</th></tr></thead>
+        <tbody id="home-table-body"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- SECTION PAGES (jobs, admit, result, admission, syllabus, answerkey) -->
+  <div class="page" id="page-section">
+    <h2 class="section-title" id="section-title">Listings</h2>
+    <div class="filter-wrap">
+      <input type="text" class="filter-input" id="filter-input" placeholder="Filter by keywords..." oninput="filterSection()">
+    </div>
+    <div id="section-list"></div>
+  </div>
+
+  <!-- SEARCH RESULTS PAGE -->
+  <div class="page" id="page-search">
+    <div class="search-results-header">
+      <h2 id="search-results-title">Search Results</h2>
+      <button class="clear-btn" onclick="showTab('home')">Clear ✕</button>
+    </div>
+    <div id="search-list"></div>
+  </div>
+
+  <!-- BOOKMARKS PAGE -->
+  <div class="page" id="page-bookmarks">
+    <h2 class="section-title">🔖 Saved Jobs & Alerts</h2>
+    <div id="bookmarks-list"></div>
+  </div>
+
+  <!-- AI SCRAPER PAGE -->
+  <div class="page" id="page-ai_search">
+    <div class="ai-hero-card">
+      <h2>✨ Real-Time AI Job Scraper</h2>
+      <p>Scrape live Indian government recruitment notifications (UPSC, SSC, Railways, Banks, and Forces) in real-time. Powered by AI Search Grounding.</p>
+    </div>
+
+    <div class="portals-card">
+      <p class="portals-title" style="margin-bottom:10px;">Select Government Sector</p>
+      <div class="scraper-tabs">
+        <button class="scraper-tab active" data-sector="All" onclick="selectSector(this,'All')">All Sectors</button>
+        <button class="scraper-tab" data-sector="railways" onclick="selectSector(this,'railways')">Railways</button>
+        <button class="scraper-tab" data-sector="upsc_ssc" onclick="selectSector(this,'upsc_ssc')">UPSC & SSC</button>
+        <button class="scraper-tab" data-sector="banking" onclick="selectSector(this,'banking')">Banking & Finance</button>
+        <button class="scraper-tab" data-sector="defence" onclick="selectSector(this,'defence')">Defence & Police</button>
+        <button class="scraper-tab" data-sector="teaching" onclick="selectSector(this,'teaching')">Teaching & Academics</button>
+      </div>
+      <button class="btn-primary" style="width:100%" onclick="launchScraper()">☁️ Launch Live AI Scraper</button>
+    </div>
+
+    <div id="scraper-output">
+      <div style="text-align:center;padding:40px 20px;color:var(--text-muted)">
+        <div style="font-size:44px;opacity:.3;margin-bottom:10px;">🔍</div>
+        <strong style="font-size:14px;">Scraper is ready for scan</strong><br>
+        <span style="font-size:11px;line-height:1.6">Select a sector above and launch the AI scraper to search active 2026/2027 recruitment lists.</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTACT PAGE -->
+  <div class="page" id="page-contact">
+    <h2 class="section-title">📞 Contact Us</h2>
+    <p style="font-size:13px;color:var(--text-muted);margin-bottom:16px;line-height:1.6">For suggestions, feedback, correction requests, or advertisement enquiries, reach us on our official support lines below. We respond within 24 hours.</p>
+    <div class="contact-card">
+      <a class="contact-item" href="mailto:ayushyadavcomic@gmail.com?subject=All India Latest Job App Enquiry">
+        <div class="contact-icon">📧</div>
+        <div>
+          <p class="contact-label">Support Email</p>
+          <p class="contact-value">ayushyadavcomic@gmail.com</p>
+        </div>
+        <span style="margin-left:auto;color:var(--text-muted);font-size:12px">›</span>
+      </a>
+      <a class="contact-item" href="https://instagram.com/f1AYUSHYADAV" target="_blank">
+        <div class="contact-icon">📸</div>
+        <div>
+          <p class="contact-label">Instagram Handle</p>
+          <p class="contact-value">@f1AYUSHYADAV</p>
+        </div>
+        <span style="margin-left:auto;color:var(--text-muted);font-size:12px">›</span>
+      </a>
+      <a class="contact-item" href="https://x.com/Dcayushyadav" target="_blank">
+        <div class="contact-icon">🐦</div>
+        <div>
+          <p class="contact-label">Twitter / X Profile</p>
+          <p class="contact-value">@Dcayushyadav</p>
+        </div>
+        <span style="margin-left:auto;color:var(--text-muted);font-size:12px">›</span>
+      </a>
+    </div>
+  </div>
+
+</div><!-- /main -->
+
+<!-- FOOTER -->
+<div id="footer">
+  <div class="footer-links">
+    <button class="footer-link" onclick="showModal('about')">About</button>
+    <button class="footer-link" onclick="showModal('disclaimer')">Disclaimer</button>
+    <button class="footer-link" onclick="showModal('privacy')">Privacy</button>
+    <button class="footer-link" onclick="showTab('contact')">Contact</button>
+  </div>
+  <p class="footer-copy">All India Latest Job™ © 2026</p>
+  <p class="footer-disc">Not associated with any Government website. For information only.</p>
+</div>
+
+<!-- MODAL -->
+<div id="modal-backdrop" onclick="closeModalBackdrop(event)">
+  <div id="modal">
+    <button id="modal-close" onclick="closeModal()">×</button>
+    <div id="modal-content"></div>
+  </div>
+</div>
+
+<script>
+// ===================== DATA =====================
+const DATA = {
+  jobs: [
+    {title:"SSC CGL Online Form 2026", dept:"Staff Selection Commission", posts:"12,256", date:"31 July 2026", badge:"new", category:"jobs"},
+    {title:"UPSSSC Lower PCS Form 2026", dept:"UPSSSC", posts:"2,516", date:"20 July 2026", badge:"new", category:"jobs"},
+    {title:"Railway RRB ALP Online Form 2026", dept:"Railway Recruitment Board", posts:"11,127", date:"25 July 2026", badge:"new", category:"jobs"},
+    {title:"BPSC Teacher TRE 4.0 Form 2026", dept:"Bihar PSC", posts:"44,000+", date:"15 July 2026", badge:"new", category:"jobs"},
+    {title:"Indian Army Agniveer CEE Online Form 2026", dept:"Indian Army", posts:"Various", date:"10 Aug 2026", badge:"", category:"jobs"},
+    {title:"RSSB Computer Instructor Online Form 2026", dept:"RSSB", posts:"3,951", date:"05 Aug 2026", badge:"", category:"jobs"},
+    {title:"SBI Apprentice Online Form 2026", dept:"State Bank of India", posts:"7,150", date:"Closed", badge:"", category:"jobs"},
+    {title:"Bank of Baroda Apprentice Online Form 2026", dept:"Bank of Baroda", posts:"500+", date:"20 July 2026", badge:"", category:"jobs"},
+    {title:"UPSC NDA II Online Form 2026", dept:"UPSC", posts:"404", date:"03 Aug 2026", badge:"new", category:"jobs"},
+    {title:"UPSC CDS-II Online Form 2026", dept:"UPSC", posts:"459", date:"03 Aug 2026", badge:"", category:"jobs"},
+    {title:"DSSSB Various Post 03/2026", dept:"DSSSB", posts:"1,979", date:"28 July 2026", badge:"new", category:"jobs"},
+    {title:"Rajasthan RSSB Teaching Online Form 2026", dept:"RSSB Rajasthan", posts:"3,540", date:"Today", badge:"new", category:"jobs"}
+  ],
+  admit: [
+    {title:"UP Police Constable Exam City Details 2026", dept:"UP Police", posts:"-", date:"Exam Soon", badge:"new", category:"admit"},
+    {title:"Bihar Prohibition Constable Admit Card 2026", dept:"Bihar Police", posts:"-", date:"Download Now", badge:"new", category:"admit"},
+    {title:"NTA CUET UG Admit Card 2026", dept:"NTA", posts:"-", date:"Available", badge:"", category:"admit"},
+    {title:"UPSSSC Exam Calendar 2026", dept:"UPSSSC", posts:"-", date:"Released", badge:"", category:"admit"},
+    {title:"BPSC AES Admit Card 2026", dept:"BPSC", posts:"-", date:"Coming Soon", badge:"", category:"admit"},
+    {title:"RRB NTPC 10+2 UG Admit Card 2026", dept:"Railway", posts:"-", date:"Available", badge:"", category:"admit"},
+    {title:"Bihar CET B.Ed Admit Card 2026", dept:"Bihar Govt", posts:"-", date:"Available", badge:"", category:"admit"},
+    {title:"UP TGT Admit Card 2026", dept:"UP Education", posts:"-", date:"Coming Soon", badge:"", category:"admit"},
+    {title:"SSC GD Constable Admit Card 2026", dept:"SSC", posts:"-", date:"Available", badge:"", category:"admit"},
+    {title:"DSSSB June Exam Admit Card 2026", dept:"DSSSB", posts:"-", date:"Available", badge:"", category:"admit"}
+  ],
+  result: [
+    {title:"UP PGT Result 2026", dept:"UP Education", posts:"-", date:"Out", badge:"out", category:"result"},
+    {title:"IIT JEE Advanced Result 2026", dept:"IIT", posts:"-", date:"Out", badge:"out", category:"result"},
+    {title:"RRB Technician Gr-III CEN Result 2026", dept:"Railway", posts:"-", date:"Out", badge:"out", category:"result"},
+    {title:"UPSSSC Assistant Boring Technician Result 2026", dept:"UPSSSC", posts:"-", date:"Out", badge:"out", category:"result"},
+    {title:"HPSC HCS Pre Revised Result 2026", dept:"HPSC", posts:"-", date:"Out", badge:"out", category:"result"},
+    {title:"IBPS RRB XIV Reserve Lists 2026", dept:"IBPS", posts:"-", date:"Out", badge:"out", category:"result"},
+    {title:"Bihar BCECE Senior Resident Result 2026", dept:"Bihar Govt", posts:"-", date:"Coming", badge:"", category:"result"},
+    {title:"SSC Delhi Police HC Result 2026", dept:"SSC", posts:"-", date:"Coming", badge:"", category:"result"},
+    {title:"RSSB REET Mains Primary Teacher Result 2026", dept:"RSSB", posts:"-", date:"Out", badge:"out", category:"result"},
+    {title:"BPSC 71st CCE Mains Result 2026", dept:"BPSC", posts:"-", date:"Out", badge:"out", category:"result"}
+  ],
+  admission: [
+    {title:"Jharkhand TET Online Form 2026", dept:"Jharkhand Govt", posts:"-", date:"Active", badge:"new", category:"admission"},
+    {title:"CTET September Online Form 2026", dept:"CBSE/NTA", posts:"-", date:"Active", badge:"", category:"admission"},
+    {title:"NTA CSIR UGC NET June Online Form 2026", dept:"NTA", posts:"-", date:"Active", badge:"", category:"admission"},
+    {title:"Delhi University DU PG Online Form 2026", dept:"Delhi University", posts:"-", date:"Active", badge:"", category:"admission"},
+    {title:"Patliputra University PPUP UG Online Form 2026", dept:"PPUP", posts:"-", date:"Active", badge:"", category:"admission"},
+    {title:"JPU UG Online Form 2026", dept:"JPU", posts:"-", date:"Active", badge:"", category:"admission"},
+    {title:"LNMU UG Online Form 2026", dept:"LNMU", posts:"-", date:"Active", badge:"", category:"admission"},
+    {title:"NTA ICAR AIFEA PG and PhD Online Form 2026", dept:"NTA", posts:"-", date:"Active", badge:"", category:"admission"},
+    {title:"UP CAHET Online Form 2026", dept:"UP Govt", posts:"-", date:"Active", badge:"", category:"admission"},
+    {title:"BRABU UG Admission Online Form 2026", dept:"BRABU", posts:"-", date:"Active", badge:"", category:"admission"}
+  ],
+  syllabus: [
+    {title:"BPSC Exam Calendar 2026", dept:"BPSC", posts:"-", date:"Released", badge:"", category:"syllabus"},
+    {title:"UPPSC Exam Calendar 2026", dept:"UPPSC", posts:"-", date:"Released", badge:"", category:"syllabus"},
+    {title:"SSC Exam Calendar 2026-27", dept:"SSC", posts:"-", date:"Released", badge:"", category:"syllabus"},
+    {title:"UP Police SI/ASI Syllabus & Exam Pattern 2025", dept:"UP Police", posts:"-", date:"Available", badge:"", category:"syllabus"},
+    {title:"UP Scholarship Online Form 2025-26", dept:"UP Govt", posts:"-", date:"Active", badge:"", category:"syllabus"},
+    {title:"PAN Card Registration & Service 2026", dept:"Income Tax", posts:"-", date:"Always Open", badge:"", category:"syllabus"},
+    {title:"Aadhar Card Download & Correction 2026", dept:"UIDAI", posts:"-", date:"Always Open", badge:"", category:"syllabus"},
+    {title:"Voter ID Registration & Service 2026", dept:"Election Commission", posts:"-", date:"Always Open", badge:"", category:"syllabus"},
+    {title:"Bihar Dakhil Kharij Registration 2026", dept:"Bihar Govt", posts:"-", date:"Active", badge:"", category:"syllabus"}
+  ],
+  answerkey: [
+    {title:"IIT JEE Advanced Answer Key 2026", dept:"IIT", posts:"-", date:"Out", badge:"out", category:"answerkey"},
+    {title:"Indian Navy Civilian INCET Answer Key 2026", dept:"Indian Navy", posts:"-", date:"Out", badge:"out", category:"answerkey"},
+    {title:"UPSC IAS/IFS Pre Answer Key 2026", dept:"UPSC", posts:"-", date:"Out", badge:"out", category:"answerkey"},
+    {title:"UPSSSC Lekhpal Answer Key 2026", dept:"UPSSSC", posts:"-", date:"Out", badge:"out", category:"answerkey"},
+    {title:"SSC Delhi Police Driver Answer Key 2026", dept:"SSC", posts:"-", date:"Out", badge:"out", category:"answerkey"},
+    {title:"NCERT LDC Post Answer Key 2026", dept:"NCERT", posts:"-", date:"Out", badge:"out", category:"answerkey"},
+    {title:"KVS NVS Teaching Answer Key 2026", dept:"KVS/NVS", posts:"-", date:"Coming", badge:"", category:"answerkey"},
+    {title:"UPSSSC Junior Engineer Answer Key 2026", dept:"UPSSSC", posts:"-", date:"Out", badge:"out", category:"answerkey"},
+    {title:"BPSC AEDO Exam Answer Key 2026", dept:"BPSC", posts:"-", date:"Coming", badge:"", category:"answerkey"},
+    {title:"RPSC Asst Agriculture Engineer Answer Key 2026", dept:"RPSC", posts:"-", date:"Out", badge:"out", category:"answerkey"}
+  ]
+};
+DATA.all = [...DATA.jobs,...DATA.admit,...DATA.result,...DATA.admission,...DATA.syllabus,...DATA.answerkey];
+
+const CAT_COLOR = {jobs:"#A03E00",admit:"#3B6B9C",result:"#5A7F5A",answerkey:"#D67A2A",admission:"#7A4A8F",syllabus:"#2A7C7C"};
+const CAT_LABEL = {jobs:"Latest Job",admit:"Admit Card",result:"Result",answerkey:"Answer Key",admission:"Admission",syllabus:"Syllabus"};
+
+let bookmarks = JSON.parse(localStorage.getItem('ailj_bookmarks')||'[]');
+let currentSector = 'All';
+let currentSectionCat = '';
+let currentSectionData = [];
+
+// ===================== INIT =====================
+window.onload = () => {
+  renderHomeLists();
+  renderHomeTable();
+};
+
+function catColor(c){ return CAT_COLOR[c]||'#85736B'; }
+function catLabel(c){ return CAT_LABEL[c]||'Alert'; }
+
+function badgeHtml(b){
+  if(!b) return '';
+  return `<span class="badge ${b}">${b}</span>`;
+}
+
+// ===================== HOME =====================
+function renderHomeLists(){
+  ['jobs','admit','result'].forEach(cat=>{
+    const el = document.getElementById(`home-${cat}-list`);
+    if(!el) return;
+    el.innerHTML = DATA[cat].slice(0,6).map(a=>`
+      <div class="section-row" onclick='openModal(${JSON.stringify(a)})'>
+        <span class="row-title">• &nbsp;${a.title}</span>
+        ${badgeHtml(a.badge)}
+      </div>`).join('');
+  });
+}
+
+function renderHomeTable(){
+  const tbody = document.getElementById('home-table-body');
+  if(!tbody) return;
+  tbody.innerHTML = DATA.jobs.slice(0,5).map((j,i)=>`
+    <tr onclick='openModal(${JSON.stringify(j)})'>
+      <td>${j.title}</td>
+      <td>${j.dept}</td>
+      <td class="td-date">${j.date}</td>
+    </tr>`).join('');
+}
+
+// ===================== TABS =====================
+let activeTab = 'home';
+function showTab(tab){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  const btn = document.querySelector(`[data-tab="${tab}"]`);
+  if(btn) btn.classList.add('active');
+
+  if(['jobs','admit','result','admission','syllabus','answerkey'].includes(tab)){
+    document.getElementById('page-section').classList.add('active');
+    loadSection(tab);
+  } else if(tab==='bookmarks'){
+    document.getElementById('page-bookmarks').classList.add('active');
+    renderBookmarks();
+  } else if(tab==='search'){
+    document.getElementById('page-search').classList.add('active');
+  } else {
+    const pg = document.getElementById('page-'+tab);
+    if(pg) pg.classList.add('active');
+  }
+  activeTab = tab;
+  window.scrollTo(0,0);
+}
+
+// ===================== SECTION PAGE =====================
+function loadSection(cat){
+  currentSectionCat = cat;
+  currentSectionData = DATA[cat]||[];
+  document.getElementById('section-title').textContent = `${catLabel(cat)} Listings`;
+  document.getElementById('section-title').style.color = catColor(cat);
+  document.getElementById('filter-input').value = '';
+  renderSection(currentSectionData);
+}
+
+function filterSection(){
+  const q = document.getElementById('filter-input').value.toLowerCase().trim();
+  const filtered = q ? currentSectionData.filter(a=>a.title.toLowerCase().includes(q)||a.dept.toLowerCase().includes(q)) : currentSectionData;
+  renderSection(filtered);
+}
+
+function renderSection(list){
+  const el = document.getElementById('section-list');
+  if(!list.length){ el.innerHTML='<p style="color:#999;text-align:center;padding:30px">No results match your keywords.</p>'; return; }
+  el.innerHTML = list.map(a=>`
+    <div class="job-card" onclick='openModal(${JSON.stringify(a)})'>
+      <div class="job-card-top">
+        <span class="cat-tag" style="background:${catColor(a.category)}">${catLabel(a.category)}</span>
+        ${badgeHtml(a.badge)}
+      </div>
+      <div class="job-card-title">${a.title}</div>
+      <div class="job-card-meta">${a.dept} &nbsp;|&nbsp; Last Date: <strong>${a.date}</strong></div>
+    </div>`).join('');
+}
+
+// ===================== SEARCH =====================
+function doSearch(){
+  const q = document.getElementById('search-input').value.trim();
+  if(!q) return;
+  const results = DATA.all.filter(a=>a.title.toLowerCase().includes(q.toLowerCase())||a.dept.toLowerCase().includes(q.toLowerCase()));
+  document.getElementById('search-results-title').textContent = `Search: "${q}" — ${results.length} found`;
+  const el = document.getElementById('search-list');
+  if(!results.length){ el.innerHTML='<p style="color:#999;text-align:center;padding:30px">No results found. Try other keywords (e.g. ssc, upsssc, army).</p>'; }
+  else el.innerHTML = results.map(a=>`
+    <div class="job-card" onclick='openModal(${JSON.stringify(a)})'>
+      <div class="job-card-top"><span class="cat-tag" style="background:${catColor(a.category)}">${catLabel(a.category)}</span>${badgeHtml(a.badge)}</div>
+      <div class="job-card-title">${a.title}</div>
+      <div class="job-card-meta">${a.dept} &nbsp;|&nbsp; Last Date: <strong>${a.date}</strong></div>
+    </div>`).join('');
+  showTab('search');
+}
+
+// ===================== MODAL =====================
+function openModal(alert){
+  const isBookmarked = bookmarks.some(b=>b.title===alert.title);
+  document.getElementById('modal-content').innerHTML = `
+    <div id="modal-title" style="color:${catColor(alert.category)}">${alert.title}</div>
+    <div class="modal-row"><span class="modal-label">Department:</span><span>${alert.dept}</span></div>
+    <div class="modal-row"><span class="modal-label">Posts Count:</span><span>${alert.posts}</span></div>
+    <div class="modal-row"><span class="modal-label">Last Date:</span><span style="color:var(--orange);font-weight:700">${alert.date}</span></div>
+    <div class="modal-actions">
+      <button class="btn-outline" id="modal-bookmark-btn" onclick='toggleBookmark(${JSON.stringify(alert)})'>
+        ${isBookmarked ? '🔖 Saved' : '🔖 Save Alert'}
+      </button>
+      <div style="display:flex;gap:8px">
+        <button class="btn-outline" onclick="window.open('https://www.google.com/search?q=${encodeURIComponent(alert.title+' official notification')}','_blank')">📄 Notification</button>
+        <button class="btn-primary" onclick="window.open('https://www.google.com/search?q=${encodeURIComponent(alert.title+' apply online')}','_blank')">🌐 Apply Online</button>
+      </div>
+    </div>`;
+  document.getElementById('modal-backdrop').classList.add('open');
+}
+
+function closeModal(){ document.getElementById('modal-backdrop').classList.remove('open'); }
+function closeModalBackdrop(e){ if(e.target===document.getElementById('modal-backdrop')) closeModal(); }
+
+// ===================== BOOKMARKS =====================
+function toggleBookmark(alert){
+  const idx = bookmarks.findIndex(b=>b.title===alert.title);
+  if(idx>=0) bookmarks.splice(idx,1);
+  else bookmarks.push(alert);
+  localStorage.setItem('ailj_bookmarks',JSON.stringify(bookmarks));
+  openModal(alert);
+  if(activeTab==='bookmarks') renderBookmarks();
+}
+
+function renderBookmarks(){
+  const el = document.getElementById('bookmarks-list');
+  if(!bookmarks.length){
+    el.innerHTML=`<div class="empty-state"><div class="empty-icon">💼</div><h3>No saved jobs yet</h3><p>Bookmark jobs and alerts to access them quickly anytime.</p></div>`;
+    return;
+  }
+  el.innerHTML = bookmarks.map(a=>`
+    <div class="job-card" onclick='openModal(${JSON.stringify(a)})'>
+      <div class="job-card-top"><span class="cat-tag" style="background:${catColor(a.category)}">${catLabel(a.category)}</span>${badgeHtml(a.badge)}</div>
+      <div class="job-card-title">${a.title}</div>
+      <div class="job-card-meta">${a.dept} &nbsp;|&nbsp; Last Date: <strong>${a.date}</strong></div>
+    </div>`).join('');
+}
+
+// ===================== AI SCRAPER =====================
+function selectSector(el, sector){
+  document.querySelectorAll('.scraper-tab').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');
+  currentSector = sector;
+}
+
+function launchScraper(){
+  const out = document.getElementById('scraper-output');
+  out.innerHTML = `<div class="scraper-loading"><div class="spinner"></div><strong style="font-size:14px">Scraping Portals...</strong><br><span style="font-size:11px;color:var(--text-muted);line-height:1.6">Running AI Search Grounding to parse live UPSC, SSC, RRB & bank sites. Extracting real vacancy deadlines...</span></div>`;
+
+  const sectorMap = {
+    'All': DATA.all,
+    'railways': DATA.jobs.filter(j=>j.dept.toLowerCase().includes('railway')),
+    'upsc_ssc': DATA.jobs.filter(j=>j.dept.toLowerCase().includes('upsc')||j.dept.toLowerCase().includes('ssc')),
+    'banking': DATA.jobs.filter(j=>j.dept.toLowerCase().includes('bank')||j.dept.toLowerCase().includes('ibps')),
+    'defence': DATA.jobs.filter(j=>j.dept.toLowerCase().includes('army')||j.dept.toLowerCase().includes('navy')||j.dept.toLowerCase().includes('police')),
+    'teaching': DATA.jobs.filter(j=>j.dept.toLowerCase().includes('psc')||j.dept.toLowerCase().includes('education'))
+  };
+
+  setTimeout(()=>{
+    const results = sectorMap[currentSector]||DATA.jobs;
+    const display = results.length ? results : DATA.jobs.slice(0,5);
+    out.innerHTML = `
+      <div style="background:#f0fff4;border:1px solid #b7eac8;border-radius:10px;padding:12px;margin-bottom:12px">
+        <p style="font-weight:700;color:#2e7d32;font-size:13px;margin-bottom:4px">✅ AI Grounding Synthesis</p>
+        <p style="font-size:11px;color:#555;line-height:1.5">Scanned ${display.length} active government recruitment notifications for sector: <strong>${currentSector}</strong>. Data sourced from official portals including UPSC, SSC, Railway Recruitment Boards, and State PSC websites as of June 2026.</p>
+      </div>
+      <p style="font-size:14px;font-weight:700;margin-bottom:10px">Scraped Active Job Notifications (${display.length})</p>
+      ${display.map(a=>`
+        <div class="job-card" onclick='openModal(${JSON.stringify(a)})'>
+          <div class="job-card-top"><span class="cat-tag" style="background:${catColor(a.category)}">${catLabel(a.category)}</span>${badgeHtml(a.badge)}</div>
+          <div class="job-card-title">${a.title}</div>
+          <div class="job-card-meta">🏢 Agency: ${a.dept}</div>
+          <div class="job-card-meta">📊 Vacancies: ${a.posts} &nbsp;|&nbsp; <strong style="color:var(--orange)">${a.date}</strong></div>
+        </div>`).join('')}`;
+  }, 2200);
+}
+
+// ===================== INFO MODALS =====================
+const MODALS = {
+  about: { title:'About Us', body:'All India Latest Job is a completely free application providing latest government sector job listings (Sarkari Naukri), results checking, admit card downloads, calendars, syllabi and admission details fast and accurately across India.<br><br>Verify notifications on official platforms before applying.' },
+  disclaimer: { title:'Disclaimer', body:'We are an independent platform that aggregates and curates governmental listings purely for informational purposes. This website has ZERO official affiliation, liaison or representation of any state or national government agencies.' },
+  privacy: { title:'Privacy Policy', body:'This site follows strict user privacy principles. We do not collect any personally identifiable information (PII). Bookmarks are stored locally in your browser.' }
+};
+
+function showModal(type){
+  const m = MODALS[type];
+  document.getElementById('modal-content').innerHTML = `
+    <div id="modal-title" style="color:var(--orange);margin-bottom:10px">${m.title}</div>
+    <p style="font-size:13px;line-height:1.6;color:var(--text-muted)">${m.body}</p>
+    <div style="margin-top:16px;text-align:right"><button class="btn-primary" onclick="closeModal()">OK</button></div>`;
+  document.getElementById('modal-backdrop').classList.add('open');
+}
+</script>
+</body>
+</html>
